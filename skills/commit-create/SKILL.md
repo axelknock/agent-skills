@@ -12,6 +12,7 @@ description: Create git commits and commit messages using conventional commits. 
 - Propose a commit plan when multiple commits are needed, then implement in order.
 - Use conventional commits (`type(scope): summary`) with present-tense, imperative summaries.
 - Include a revert section that lists concrete commands to undo each commit.
+- Only commit to the default branch (e.g., `main`/`master` or detected default) when the user explicitly requests it.
 
 ## Grouping Rules
 
