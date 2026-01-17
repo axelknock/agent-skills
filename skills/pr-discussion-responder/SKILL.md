@@ -53,21 +53,10 @@ Default to implementing clear changes. If a comment is ambiguous, offer 2-3 opti
 
 "This comment could mean: (1) rename X to Y, (2) add guard for null, or (3) leave as-is and clarify intent. Which do you prefer?"
 
-### Step 4: Apply Changes and Respond
+### Step 4: Apply Changes
 
 - Make code changes and run relevant tests if feasible.
-- For each addressed comment, draft a concise reply referencing the change.
-- If you need to post replies, use `gh api` (not `gh pr comment`).
-
-Reply examples:
-
-```bash
-# Reply to an issue comment
-gh api -X POST repos/{owner}/{repo}/issues/{pr_number}/comments -f body='Addressed in 1a2b3c4; added null guard.'
-
-# Reply to a review comment (use comment ID from review_comments)
-gh api -X POST repos/{owner}/{repo}/pulls/{pr_number}/comments/{comment_id}/replies -f body='Fixed in 1a2b3c4; updated error handling.'
-```
+- **IMPORTANT**: NEVER POST REPLIES TO THE PULL REQUEST
 
 ### Step 5: Report Back
 
