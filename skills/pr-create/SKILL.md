@@ -1,5 +1,5 @@
 ---
-name: create-pr
+name: pr-create
 description: Create pull requests. Use when opening PRs, writing PR descriptions, or preparing changes for review.
 ---
 
