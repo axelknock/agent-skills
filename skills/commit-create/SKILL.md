@@ -29,7 +29,7 @@ description: Create git commits and commit messages using conventional commits. 
 - If the commit is centered on one or more specific issues, include that/those issue #(s) in the summary, ie `(#123)`, `(#123) (#456)`
 - Add body content only when it adds context (tradeoffs, breaking changes, migration notes).
 - If relevant PRs or issues are referenced in the conversation, include proper GitHub syntax (e.g., `#123`, `owner/repo#123`) in the body or footer.
-- Always include a co-author footer for agent commits: `Co-authored with: <agent name> <noreply@provider>`.
+- Always include a co-author footer for agent commits: `Co-authored with: agent name <noreply@provider>`.
 
 ## Revert Commands (Always Include)
 
