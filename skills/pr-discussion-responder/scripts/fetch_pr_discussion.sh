@@ -51,4 +51,46 @@ jq -n \
   --slurpfile issue_comments "$tmpdir/issue_comments.json" \
   --slurpfile review_comments "$tmpdir/review_comments.json" \
   --slurpfile reviews "$tmpdir/reviews.json" \
-  '{repo: $repo, pr_number: $pr_number, pr: $pr[0], issue_comments: $issue_comments[0], review_comments: $review_comments[0], reviews: $reviews[0]}'
+  '{
+    repo: $repo,
+    pr_number: $pr_number,
+    pr: {
+      number: $pr[0].number,
+      title: $pr[0].title,
+      html_url: $pr[0].html_url,
+      state: $pr[0].state,
+      user: { login: $pr[0].user.login },
+      base: { ref: $pr[0].base.ref },
+      head: { ref: $pr[0].head.ref, sha: $pr[0].head.sha }
+    },
+    issue_comments: ($issue_comments[0] | map({
+      id,
+      user: { login: .user.login },
+      created_at,
+      updated_at,
+      body,
+      html_url
+    })),
+    review_comments: ($review_comments[0] | map({
+      id,
+      user: { login: .user.login },
+      created_at,
+      updated_at,
+      body,
+      html_url,
+      path,
+      side,
+      line,
+      original_line,
+      diff_hunk,
+      in_reply_to_id
+    })),
+    reviews: ($reviews[0] | map({
+      id,
+      user: { login: .user.login },
+      state,
+      submitted_at,
+      body,
+      html_url
+    }))
+  }'
