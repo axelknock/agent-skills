@@ -9,7 +9,7 @@ description: Create git commits and commit messages using conventional commits. 
 
 - Inspect working tree and diffs before proposing commits.
 - Group changes into logically coherent commits; prefer smaller commits with clear scope over one large commit.
-- Propose a commit plan when multiple commits are needed, then implement in order.
+- When multiple commits are needed, proceed to commit without waiting for plan confirmation; report the actual commits afterward with hashes.
 - Use conventional commits (`type(scope): summary`) with present-tense, imperative summaries.
 - Include a revert section that lists concrete commands to undo each commit.
 - Only commit to the default branch (e.g., `main`/`master` or detected default) when the user explicitly requests it.
@@ -43,6 +43,6 @@ For every commit created, include a short list of commands to undo it, tailored 
 
 Provide results in this order:
 
-1. Commit plan (if multiple commits).
-2. Each commit message and what changes it includes.
+1. Each commit message and what changes it includes.
+2. Commit hashes (one per commit).
 3. Revert commands per commit.
