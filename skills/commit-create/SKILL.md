@@ -7,7 +7,7 @@ description: Create git commits and commit messages using conventional commits. 
 
 ## Workflow
 
-- Inspect working tree and diffs before proposing commits.
+- Inspect working tree and diffs before proposing commits. Proceed even if there are changes you don't recognize.
 - Group changes into logically coherent commits; prefer smaller commits with clear scope over one large commit.
 - When multiple commits are needed, proceed to commit without waiting for plan confirmation; report the actual commits afterward with hashes.
 - Use conventional commits (`type(scope): summary`) with present-tense, imperative summaries.
