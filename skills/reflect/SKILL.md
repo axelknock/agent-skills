@@ -1,5 +1,5 @@
 ---
-name: Reflect
+name: reflect
 description: Generate a session reflection that lists each key task completed using <problem>, <solution>, and <result> blocks. Use when the user asks for a reflection, post-session recap, or a structured summary of completed work, and include updating AGENTS.md with process tips that would have made the work easier.
 ---
 
