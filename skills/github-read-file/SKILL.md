@@ -11,9 +11,8 @@ Use the GitHub CLI (`gh`) to browse repository contents and fetch raw file data.
 
 1. List a directory to discover candidate files:
    ```bash
-   gh api repos/<owner>/<repo>/contents[/<subdir>] -f ref=<ref>
+   gh api repos/<owner>/<repo>/contents[/<subdir>]
    ```
-   - `ref` is optional (branch, tag, or SHA). Defaults to `HEAD`.
 2. If you need to find a file by name or search deeper, list the full tree:
    ```bash
    gh api repos/<owner>/<repo>/git/trees/<ref> -f recursive=1
