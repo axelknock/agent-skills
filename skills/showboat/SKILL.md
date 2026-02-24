@@ -7,18 +7,6 @@ description: Create and maintain executable markdown demo documents using the sh
 
 Use `showboat` to build executable demo documents that mix explanation, commands, and captured output.
 
-## Verify availability
-
-1. Check if `showboat` is installed:
-   ```bash
-   showboat --help
-   ```
-2. If missing, prefer one-off usage:
-   ```bash
-   uvx showboat --help
-   ```
-3. If `uvx` is unavailable, ask the user before installing globally.
-
 ## Core workflow
 
 1. Initialize the document:
