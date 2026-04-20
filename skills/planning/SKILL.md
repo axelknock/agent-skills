@@ -1,47 +1,90 @@
 ---
 name: planning
-description: Use when you have a spec or requirements, and must plan step by step how to implement the specification. This planning process should take place before touching any code
+description: Use when work needs discovery, design, or a multi-step implementation plan. Skip for straightforward mechanical edits with clear requirements and low design risk.
 ---
 
-# Writing Plans
+# Planning
 
-## Overview
+Use this skill to turn a request into an approved design and an implementation plan.
 
-Write comprehensive implementation plans which assume the implementing engineer has zero context for our codebase and questionable taste, but is eager to please and will try hard to complete even the most arduous tasks. Document everything they need to know: which files to touch for each task, code, testing, docs they might need to check, and most importantly, how to test/verify their changes. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
+Do not use this skill for straightforward mechanical work such as small localized fixes, simple renames, obvious copy edits, or narrowly scoped changes with clear requirements and no meaningful design choices.
 
-Assume the engineer for whom you are writing this plan is a skilled developer, but knows almost nothing about our toolset or problem domain. Also assume they don't know good test design very well.
+## Hard Gate
 
-**Announce at start:** "I'm using the planning skill to create the implementation plan."
+Do not implement, scaffold, or modify code until you have done the right amount of discovery for the task, presented the approach, and received user approval when the work changes behavior, introduces new structure, or carries meaningful product or technical ambiguity.
 
-**Save plans to:** `docs/agents/plans/YYYY-MM-DD-<feature-name>.md`
-- (User preferences for plan location override this default)
+For very small tasks, the design can be brief. Do not force a long spec when a short written approach is enough. Scale the process to the task.
 
-## Scope Check
+## Process
 
-If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own (atomic).
+Complete these stages in order, but keep them proportionate to the size and risk of the work.
 
-## File Structure
+1. **Assess whether planning is needed**
+   - Check whether the task is mechanical or requires discovery/design.
+   - Skip this skill only when the change is obvious, localized, and low risk.
+   - If the request spans multiple independent subsystems, stop and propose decomposition before going deeper.
 
-Before defining tasks, map out which files will be created or modified and what each one is responsible for. This is where decomposition decisions get locked in.
+2. **Explore project context**
+   - Inspect relevant files, docs, and recent history.
+   - Follow existing patterns.
+   - Note any constraints, conventions, or adjacent code that affect the work.
 
-- Design units with clear boundaries and well-defined interfaces. Each file should have one clear responsibility.
-- You reason best about code you can hold in context at once, and your edits are more reliable when files are focused. Prefer smaller, focused files over large ones that do too much.
-- In existing codebases, follow established patterns. If the codebase uses large files, don't unilaterally restructure - but if a file you're modifying has grown unwieldy, including a split in the plan is reasonable.
+3. **Clarify the request**
+   - Ask questions only where uncertainty affects scope, behavior, or implementation choices.
+   - Prefer multiple-choice questions when possible.
+   - Identify purpose, constraints, success criteria, and non-goals.
 
-This structure informs the task decomposition. Each task should produce self-contained changes that make sense independently.
+4. **Propose approaches**
+   - Present 2-3 valid approaches with trade-offs when there is a real design choice.
+   - Present them as viable options before recommending one.
+   - If the task is too small to justify multiple options, state the single obvious approach and why it is sufficient.
 
-## Bite-Sized Task Granularity
+5. **Present the design**
+   - Describe the intended architecture, components, data flow, error handling, and testing approach at the level the task warrants.
+   - Keep the design concise for simple tasks and more structured for complex work.
+   - Get user approval before moving to implementation planning when the work is behavior-changing, architectural, or ambiguous.
 
-**Each step is one action (2-5 minutes):**
-- "Write the failing test(s)" - step
-- "Run it/them to make sure it/them fails" - step
-- "Implement the minimal code to make the test(s) pass" - step
-- "Run the test(s) and make sure it/they pass(es)" - step
-- "Commit" - step
+6. **Write the design artifact when warranted**
+   - For substantial work, save the approved design to `docs/agents/specs/YYYY-MM-DD-<topic>.md`.
+   - For small but non-mechanical work, an approved in-chat design summary is sufficient unless the user asks for a spec.
 
-## Plan Document Header
+7. **Write the implementation plan**
+   - Save plans to `docs/agents/plans/YYYY-MM-DD-<feature-name>.md` unless the repository specifies another location.
+   - Produce a step-by-step plan that an engineer with little project context can execute reliably.
 
-**Every plan MUST start with this header:**
+8. **Self-review the output**
+   - Remove placeholders and vague instructions.
+   - Check for contradictions, missing scope, and ambiguous requirements.
+   - Verify the plan fully covers the approved design.
+
+## Scope and Decomposition
+
+If the request covers multiple independent subsystems, do not write one giant plan. Propose decomposition into smaller specs/plans. Each plan should produce something atomic, testable, and reviewable.
+
+When decomposing work, consider whether parts of it can be tackled concurrently.
+
+- Identify prerequisites and blocking tasks first.
+- Separate truly independent work into parallelizable tracks when that will shorten execution or reduce idle time.
+- Call out dependencies clearly so parallel work does not create avoidable conflicts.
+- Do not force parallelism when sequential execution is simpler, safer, or easier to review.
+
+## Design Guidance
+
+- Prefer simple designs.
+- Apply YAGNI ruthlessly.
+- Break work into focused units with clear boundaries and interfaces.
+- Stay consistent with the existing codebase unless a targeted structural improvement directly supports the task.
+- Avoid unrelated refactors.
+
+## Plan-Writing Guidance
+
+Assume the implementing engineer is capable but has little context about this codebase, toolchain, or domain.
+
+Before defining tasks, map out which files will be created or modified and what each file is responsible for.
+
+### Plan header
+
+Every plan must start with:
 
 ```markdown
 # Implementation Plan for [Feature Name]
@@ -52,11 +95,24 @@ This structure informs the task decomposition. Each task should produce self-con
 
 **Tech Stack:** [Key technologies/libraries]
 
-**Documentation:** [Where the documentation of this feature will live: in a specific doc if it's a full feature, or comments if it's purely code]
+**Documentation:** [Where the documentation of this feature will live]
 ---
 ```
 
-## Task Structure
+### Task granularity
+
+Keep tasks bite-sized and ordered. Favor steps that take roughly 2-5 minutes each.
+
+Where useful, group tasks into sequential and parallelizable tracks. Note parallelism only when tasks are genuinely independent and the dependency chain is clear.
+
+Typical flow:
+1. Write the failing test(s)
+2. Run the test(s) and confirm failure
+3. Write the minimal implementation
+4. Run the test(s) and confirm success
+5. Commit
+
+### Task template
 
 ````markdown
 ### Task N: [Component Name]
@@ -102,38 +158,29 @@ Commit changes following repository style.
 
 ## No Placeholders
 
-Every step must contain the actual content an engineer needs. These are **plan failures** — never write them:
-- "TBD", "TODO", "implement later", "fill in details"
-- "Add appropriate error handling" / "add validation" / "handle edge cases"
-- "Write tests for the above" (without actual test code)
-- "Similar to Task N" (repeat the code — the engineer may be reading tasks out of order)
-- Steps that describe what to do without showing how (code blocks required for code steps)
-- References to types, functions, or methods not defined in any task
+Do not write:
+- `TBD`, `TODO`, `implement later`, or other placeholders
+- vague instructions like "add appropriate error handling"
+- "write tests" without actual test content
+- references to undefined functions, types, or methods
+- "similar to Task N" instead of restating the needed details
 
-## Remember
-- Exact file paths always
-- Complete code in every step — if a step changes code, show the code
-- Exact commands with expected output
-- DRY, YAGNI, TDD, frequent commits
+If a step changes code, include the exact code. If a step runs verification, include the exact command and expected result.
 
 ## Self-Review
 
-After writing the complete plan, look at the spec with fresh eyes and check the plan against it.
+After writing the plan:
 
-**1. Spec coverage:** Skim each section/requirement in the spec. Can you point to a task that implements it? List any gaps.
+1. Check that each requirement from the approved design is covered.
+2. Scan for placeholders or vague language.
+3. Check type names, function names, and interfaces for consistency across tasks.
+4. Make sure the plan is still scoped correctly; split it if it has become too large.
 
-**2. Placeholder scan:** Search your plan for red flags — any of the patterns from the "No Placeholders" section above. Fix them.
+Fix issues inline before handing the plan off.
 
-**3. Type consistency:** Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called `clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug.
+## Handoff
 
-If you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.
+After saving the plan, offer execution options:
 
-## Execution Handoff
-
-After saving the plan, offer execution choice:
-
-**"Plan complete and saved to `docs/agents/plans/<filename>.md`. Two execution options:**
-
-**1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per task, review between tasks, quickly iterate
-
-**2. Inline Execution** - Execute tasks in this session using executing-plans, batch execution with checkpoints
+- **Subagent-driven** — execute task by task with review between tasks
+- **Inline execution** — execute tasks in the current session with checkpoints
