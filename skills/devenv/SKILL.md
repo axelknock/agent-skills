@@ -25,7 +25,8 @@ description: Manage and troubleshoot devenv-based developer environments. Use wh
 - Use `devenv search <name>` to confirm package names in the pinned nixpkgs.
 - Use `devenv info` to inspect resolved environment details.
 - For evaluation errors, locate the invalid option or Nix syntax issue and correct it in the relevant file.
-- For direnv issues, confirm `.envrc` contains `use devenv` (or the official `devenv direnvrc`) and rerun `direnv allow`.
+- Devenv retains state for services in .devenv/state/<service name>. Sometimes changes to `devenv.nix` are not propagated until this state is cleared (service directory removed) and re-initialized.
+- Sometimes devenv's cache will overwrite new values, in which case commands should be evaluated with --no-eval-cache
 
 ## Project setup references
 
@@ -46,6 +47,7 @@ Read these references when setting up devenv for a matching project type:
 ### Core commands
 
 - `devenv init`: create starter files.
+> *CRITICAL*: `devenv init` SHOULD BE EXCLUSIVELY USED TO PRODUCE `devenv.nix` and `devenv.yaml`. If neither of these files exist, do not create them yourself. Ask the user to run init to create them.
 - `devenv shell`: enter the environment.
 - `devenv up`: start defined processes/services.
 - `devenv test`: run `enterTest` or `.test.sh`.
