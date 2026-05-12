@@ -14,6 +14,12 @@ let
 in
 {
   languages.elixir.enable = true;
+  # It is important to use a specific version of elixir/BEAM for
+  # reproducability. New versions of BEAM/OTP are released on a yearly basis,
+  # and elixir releases come with a frequency of about 6-12 months.
+  
+  # Elixir 1.19 was released October 16, 2025
+  # Erlang/OTP 28.0 was released on May 21, 2025
   languages.elixir.package = pkgs.beam28Packages.elixir_1_19;
 
   processes.phoenix.exec = "mix phx.server";
